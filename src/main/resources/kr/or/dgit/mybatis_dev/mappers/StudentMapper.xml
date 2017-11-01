@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.mybatis_dev.dao.StudentDao">
+		<sql id="selectSql">
+			select stud_id, name, email, dob, phone
+			from students			
+		</sql>
+		
+		<sql id="insertSql">
+			insert into students(stud_id,name,email,phone,dob)
+			values(#{studId},#{name},#{email},#{phone},#{dob}) 		
+		</sql>
+		
+		<sql id="whereSql">
+			<where>
+				<if test="studId != null">
+					stud_id=#{studId}	
+				</if>
+			</where>
+		</sql>
+		
+		<sql id="updateSql">
+			UPDATE STUDENTS SET NAME = #{name}, EMAIL =#{email}, PHONE=#{phone}, DOB=#{dob}
+			WHERE STUD_ID = #{studId}
+		</sql>
+		
+		<sql id="deleteSql">
+			DELETE FROM STUDENTS WHERE STUD_ID=#{studId}
+		</sql>
+		
+		<select id="selectStudentByNo" parameterType="Student" resultType="Student">
+			<include refid="selectSql"/>
+			where stud_id=#{studId}
+		</select>
+		
+		<select id="selectStudentByAll" parameterType="Student" resultType="Student">
+			<include refid="selectSql"/>
+		</select>
+		
+		<select id="selectStudentByNoWithAPI" parameterType="Student" resultType="Student">
+			<include refid="selectSql"/>
+			<include refid="whereSql"/>
+		</select>
+		
+		<select id="selectStudentByAllWithAPI" parameterType="Student" resultType="Student">
+			<include refid="selectSql"/>
+		</select>
+		
+		<insert id="insertStudent" parameterType="Student">
+			<include refid="insertSql"/>
+		</insert>
+		
+		<insert id="insertStudentWithAPI" parameterType="Student" >
+			<include refid="insertSql"/>
+		</insert>
+		
+		<insert id="insertStudentAutoInc" parameterType="Student" useGeneratedKeys="true" keyProperty="studId">
+			insert into students(stud_id,name,email,phone,dob)
+			values(#{studId},#{name},#{email},#{phone},#{dob}) 	
+		</insert>
+		
+		<update id="updateStudent" parameterType="Student">
+			<include refid="updateSql"/>
+		</update>
+		<update id="updateStudentWithAPI" parameterType="Student">
+			<include refid="updateSql"/>
+		</update>
+		
+		<delete id="deleteStudent">
+			<include refid="deleteSql"/>
+		</delete>
+		<delete id="delteStudentWithAPI">
+			<include refid="deleteSql"/>
+		</delete>
+</mapper>
