@@ -3,6 +3,7 @@ package kr.or.dgit.mybatis_dev.service;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -126,6 +127,40 @@ public class TestStudentSertivce {
 		int res = studentService.delteStudentWithAPI(student);
 		Assert.assertEquals(1, res);
 	}
+	
+	@Test
+	public void testLSelectStudentByAllForResultMap() {
+		List<Student> lists =studentService.selectStudentByAllForResultMap();
+		Assert.assertNotNull(lists);
+	}
+	
+	@Test
+	public void testNSelectStudentByAllForResultMapWithAPI() {
+		List<Student> lists =studentService.selectStudentByAllForResultMapWithAPI();
+		Assert.assertNotNull(lists);
+	}
+	
+	@Test
+	public void testMSelectStudentByAllForHashMap() {
+		List<Map<String, Object>> lists =studentService.selectStudentByAllForHashMap();
+		Assert.assertNotNull(lists);
+	}
+	
+	@Test
+	public void testOSelectStudentByAllForResultMapWithAPI() {
+		List<Map<String, Object>> lists =studentService.selectStudentByAllForHashMapWithAPI();
+		Assert.assertNotNull(lists);
+	}
+	
+	@Test
+	public void testPfindStudentByNoForResultMapeExtends() {
+		Student student = new Student();
+		student.setStudId(1);
 		
+		Student extStd = studentService.findStudentByNoForResultMapeExtends(student);
+		Student extStdApi = studentService.findStudentByNoForResultMapeExtendsWithAPI(student);
+		Assert.assertEquals(extStd, extStdApi);
+	}
+	
 	
 }

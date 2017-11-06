@@ -8,9 +8,21 @@ public class Student {
 	private String email;
 	private PhoneNumber phone;
 	private Date dob;
+	private Address address;
 	
-	public Student() {}
+	
 
+	public Student() {}
+	
+	public Student(int studId, String name, String email, PhoneNumber phone, Date dob, Address address) {
+		this.studId = studId;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.dob = dob;
+		this.address = address;
+	}
+	
 	public Student(int studId, String name, String email, PhoneNumber phone, Date dob) {
 		this.studId = studId;
 		this.name = name;
@@ -19,6 +31,7 @@ public class Student {
 		this.dob = dob;
 	}
 	
+
 	public Student( String name, String email, PhoneNumber phone, Date dob) {
 		
 		this.name = name;
@@ -66,12 +79,41 @@ public class Student {
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	
+		
+	@Override
+	public int hashCode() {
+		return studId;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		if (studId != other.studId)
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {
-		return String.format("%s, %s, %s, %s, %s", studId, name, email, phone,
-				dob);
+		return String.format("Student [%s, %s, %s, %s, %s, %s]", studId, name, email, phone, dob, address);
 	}
-
+	
+	
 	
 }

@@ -69,7 +69,56 @@
 		<delete id="deleteStudent">
 			<include refid="deleteSql"/>
 		</delete>
+		
 		<delete id="delteStudentWithAPI">
 			<include refid="deleteSql"/>
 		</delete>
+		
+		 <resultMap id="StudentResult" type="Student">
+			<id property="studId" column = "stud_id"/>
+			<result property="name" column = "name"/>
+			<result property="email" column = "email"/>
+			<result property="phone" column = "phone"/>
+			<result property="dob" column = "db"/>
+		</resultMap>		
+		
+		<select id="selectStudentByAllForResultMap" resultMap="StudentResult">
+			<include refid="selectSql" />
+		</select>
+		
+		<select id="selectStudentByAllForResultMapWithAPI" resultMap="StudentResult">
+			<include refid="selectSql" />
+		</select> 
+		
+		<select id="selectStudentByAllForHashMap" resultType="map">
+			<include refid="selectSql"/>
+		</select>
+		
+		<select id="selectStudentByAllForHashMapWithAPI" resultType="map">
+			<include refid="selectSql"/>
+		</select>
+		
+		<resultMap type="Student" id="StudentWithAddressResult">
+			<result property="address.addrId" column="addr_id"/>
+			<result property="address.street" column="street"/>
+			<result property="address.city" column="city"/>
+			<result property="address.state" column="state"/>
+			<result property="address.zip" column="zip"/>
+			<result property="address.country" column="country"/>
+		</resultMap>		
+		
+		<sql id="selectJoinAddressSql">
+			SELECT STUD_ID, NAME, EMAIL, PHONE, A.ADDR_ID, STREET, CITY, STATE, ZIP, COUNTRY
+			FROM STUDENTS S LEFT OUTER JOIN ADDRESSES A ON S.ADDR_ID=A.ADDR_ID
+		</sql>
+		
+		<select id="selectStudentByNoForResultMapExtends" parameterType="Student" resultMap="StudentWithAddressResult">
+			<include refid="selectJoinAddressSql"/>
+			<include refid="whereSql"/>
+		</select>
+		
+		<select id="selectStudentByNoForResultMapExtendsWithAPI" parameterType="Student" resultMap="StudentWithAddressResult">
+			<include refid="selectJoinAddressSql"/>
+			<include refid="whereSql"></include>
+		</select>
 </mapper>
