@@ -119,6 +119,30 @@ public class StudentDaoImpl implements StudentDao{
 	public Student selectStudentByNoForResultMapExtendsWithAPI(Student student) {
 		log.debug("selectStudentByNoForResultMapExtends()");
 		return sqlSession.selectOne(namespace + "selectStudentByNoForResultMapExtendsWithAPI", student);
+	}
+
+	@Override
+	public Student selectStudentByNoAssociation(Student student) {
+		log.debug("selectStudentByNoAssociation()");
+		return sqlSession.getMapper(StudentDao.class).selectStudentByNoAssociation(student);
+	}
+
+	@Override
+	public Student selectStudentByNoAssociationWithAPI(Student student) {
+		log.debug("selectStudentByNoAssociationWithAPI()");
+		return sqlSession.selectOne(namespace + "selectStudentByNoAssociationWithAPI", student);
+	}
+
+	@Override
+	public int insertEnumStudent(Student student) {
+		log.debug("insertEnumStudent()");
+		return sqlSession.getMapper(StudentDao.class).insertEnumStudent(student);
+	}
+
+	@Override
+	public int insertEnumStudentWithAPI(Student student) {
+		log.debug("insertEnumStudentWithAPI()");
+		return sqlSession.insert(namespace + "insertEnumStudentWithAPI", student);
 	}	
 	
 	

@@ -98,7 +98,7 @@
 			<include refid="selectSql"/>
 		</select>
 		
-		<resultMap type="Student" id="StudentWithAddressResult">
+		<resultMap type="Student" id="StudentWithAddressResult" extends="StudentResult">
 			<result property="address.addrId" column="addr_id"/>
 			<result property="address.street" column="street"/>
 			<result property="address.city" column="city"/>
@@ -119,6 +119,37 @@
 		
 		<select id="selectStudentByNoForResultMapExtendsWithAPI" parameterType="Student" resultMap="StudentWithAddressResult">
 			<include refid="selectJoinAddressSql"/>
-			<include refid="whereSql"></include>
+			<include refid="whereSql"/>
 		</select>
+		
+		
+		<resultMap type="Student" id="StudentAssociation">
+			<association property="address" resultMap="kr.or.dgit.mybatis_dev.dao.AddressDao.AddressResult"/>
+		</resultMap>
+		
+		<select id="selectStudentByNoAssociation" parameterType="Student" resultMap="StudentAssociation">
+			<include refid="selectJoinAddressSql"/>
+			<include refid="whereSql"/>
+		</select>
+		
+		<select id="selectStudentByNoAssociationWithAPI" parameterType="Student" resultMap="StudentAssociation">
+			<include refid="selectJoinAddressSql"/>
+			<include refid="whereSql"/>
+		</select>
+		
+		<!-- enum 타입 다루기  -->
+		
+		<sql id="insertEnumSql">
+			INSERT INTO STUDENTS(STUD_ID, NAME, EMAIL, PHONE, DOB, GENDER)
+			VALUES (#{studId}, #{name}, #{email}, #{phone}, #{dob}, #{gender})
+		</sql>
+				
+		<insert id="insertEnumStudent" parameterType = "Student" useGeneratedKeys="true" keyProperty="studId">
+			<include refid="insertEnumSql"/>
+		</insert>
+		
+		<insert id="insertEnumStudentWithAPI" parameterType="Student" useGeneratedKeys="true" keyProperty="studId">
+			<include refid="insertEnumSql"/>
+		</insert>
+		
 </mapper>

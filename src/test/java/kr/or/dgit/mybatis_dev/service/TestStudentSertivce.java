@@ -12,6 +12,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import kr.or.dgit.mybatis_dev.dto.Gender;
 import kr.or.dgit.mybatis_dev.dto.PhoneNumber;
 import kr.or.dgit.mybatis_dev.dto.Student;
 
@@ -78,7 +79,7 @@ public class TestStudentSertivce {
 		Assert.assertEquals(1, res);
 	}
 	
-	@Test
+	/*@Test
 	public void testGInsertStudentAutoInc() {
 		Calendar newDate = GregorianCalendar.getInstance();
 		newDate.set(1993, 3, 28);
@@ -86,7 +87,7 @@ public class TestStudentSertivce {
 		
 		int res = studentService.insertStudentAutoInc(student);
 		Assert.assertEquals(1, res);
-	}
+	}*/
 	
 	@Test
 	public void testHupdateStudent() {
@@ -162,5 +163,45 @@ public class TestStudentSertivce {
 		Assert.assertEquals(extStd, extStdApi);
 	}
 	
+	@Test
+	public void testQselectStudentByNoAssociation() {
+		Student student = new Student();
+		student.setStudId(1);
+		
+		Student extStd = studentService.findStudentByNoAssociation(student);
+		Student extStdApi = studentService.findStudentByNoAssociationWithAPI(student);
+		
+		Assert.assertEquals(extStd.getStudId(), extStdApi.getStudId());
+	}
 	
+	@Test
+	public void testRInsetEnumStudent() {
+		Calendar newDate = GregorianCalendar.getInstance();
+		newDate.set(1993, 3, 28);
+		Student student = new Student();
+		student.setName("test");
+		student.setEmail("test@test.co.kr");
+		student.setDob(newDate.getTime());
+		student.setPhone(new PhoneNumber("010-1234-1234"));
+		student.setGender(Gender.FEMALE);
+
+		int res = studentService.insertEnumStudent(student);
+		Assert.assertEquals(1, res);
+	}
+	
+	@Test
+	public void testSInsetEnumStudentWithAPI() {
+		Calendar newDate = GregorianCalendar.getInstance();
+		newDate.set(1993, 3, 28);
+		Student student = new Student();
+		student.setName("test");
+		student.setEmail("test@test.co.kr");
+		student.setDob(newDate.getTime());
+		student.setPhone(new PhoneNumber("010-1234-1234"));
+		student.setGender(Gender.MALE);
+		
+		int res = studentService.insertEnumStudentWithAPI(student);
+		Assert.assertEquals(1, res);
+	}
+
 }

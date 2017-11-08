@@ -9,10 +9,21 @@ public class Student {
 	private PhoneNumber phone;
 	private Date dob;
 	private Address address;
+	private Gender gender;
 	
 	
 
 	public Student() {}
+	
+	public Student(int studId, String name, String email, PhoneNumber phone, Date dob, Address address, Gender gender) {
+		this.studId = studId;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.dob = dob;
+		this.address = address;
+		this.gender = gender;
+	}
 	
 	public Student(int studId, String name, String email, PhoneNumber phone, Date dob, Address address) {
 		this.studId = studId;
@@ -87,9 +98,15 @@ public class Student {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-
-	
 		
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
 	@Override
 	public int hashCode() {
 		return studId;
@@ -111,7 +128,7 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return String.format("Student [%s, %s, %s, %s, %s, %s]", studId, name, email, phone, dob, address);
+		return String.format("Student [%s, %s, %s, %s, %s, %s, %s]", studId, name, email, phone, dob, address,gender);
 	}
 	
 	
