@@ -1,10 +1,14 @@
 package kr.or.dgit.mybatis_dev.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
+import org.apache.ibatis.session.ResultContext;
+import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.mybatis_dev.dto.Student;
@@ -143,6 +147,40 @@ public class StudentDaoImpl implements StudentDao{
 	public int insertEnumStudentWithAPI(Student student) {
 		log.debug("insertEnumStudentWithAPI()");
 		return sqlSession.insert(namespace + "insertEnumStudentWithAPI", student);
+	}
+
+	@Override
+	public Student selectAllStudentByParam(String name, String email) {
+		log.debug("selectAllStudentByParam()");
+		return sqlSession.getMapper(StudentDao.class).selectAllStudentByParam(name, email);
+	}
+
+	@Override
+	public Student selectAllStudentByStudent(Student student) {
+		log.debug("selectAllStudentByStudent()");
+		return sqlSession.getMapper(StudentDao.class).selectAllStudentByStudent(student);
+	}
+
+	@Override
+	public Student selectAllStudentByMap(Map<String, String> map) {
+		log.debug("selectAllStudentByMap()");
+		return sqlSession.getMapper(StudentDao.class).selectAllStudentByMap(map);
+	}
+
+	@Override
+	public Map<Integer, String> selectStudentForMap() {
+		log.debug("selectStudentForMap()");
+		Map<Integer, String> map = new HashMap<>();
+		ResultHandler<Student> resultHandler = new ResultHandler<Student>() {
+			
+			@Override
+			public void handleResult(ResultContext<? extends Student> resultContext) {
+				Student student = resultContext.getResultObject();
+				map.put(student.getStudId(),student.getName());
+			}
+		};
+		sqlSession.select(namespace + "selectStudentForMap", resultHandler);
+		return map;
 	}	
 	
 	

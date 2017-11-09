@@ -2,8 +2,10 @@ package kr.or.dgit.mybatis_dev.service;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -204,4 +206,34 @@ public class TestStudentSertivce {
 		Assert.assertEquals(1, res);
 	}
 
+	@Test
+	public void testTFindAllStudentByParam() {
+		Student student= studentService.findAllStudentByParam("Timothy", "timothy@gmail.com");
+		Assert.assertNotNull(student);
+	}
+	@Test
+	public void testUFindAllStudentByStudent() {
+		Student std = new Student();
+		std.setName("Timothy");
+		std.setEmail("timothy@gmail.com");
+		Student student= studentService.findAllStudentByStudent(std);
+		Assert.assertNotNull(student);
+	}
+	@Test
+	public void testVindAllStudentByMap() {
+		Map<String, String> maps = new HashMap<>();
+		maps.put("name", "Timothy");
+		maps.put("email", "timothy@gmail.com");
+		Student student= studentService.findAllStudentByMap(maps);
+		Assert.assertNotNull(student);
+	}
+	@Test
+	public void testFindStudentForMap() {
+		Map<Integer,String> map = studentService.findStudentForMap();
+		Assert.assertNotNull(map);
+		
+		for(Entry<Integer,String> entry : map.entrySet()) {
+			System.out.printf("key(%s) = value(%s)%n", entry.getKey(), entry.getValue());
+		}
+	}
 }

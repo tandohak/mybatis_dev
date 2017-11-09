@@ -12,8 +12,6 @@ import kr.or.dgit.mybatis_dev.util.MyBatisSqlSessionFactory;
 
 public class StudentService {
 
-
-
 	public List<Student> findStudentByAll() {
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
 			StudentDao dao = new StudentDaoImpl(sqlSession);
@@ -212,5 +210,33 @@ public class StudentService {
 			sqlSession.commit();
 		}
 		return res;
+	}
+	
+	public Student findAllStudentByParam(String name, String email) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectAllStudentByParam(name, email);
+		}
+	}
+	
+	public Student findAllStudentByStudent(Student student) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectAllStudentByStudent(student);
+		}
+	}
+	
+	public Student findAllStudentByMap(Map<String, String> map) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectAllStudentByMap(map);
+		}
+	}
+	
+	public Map<Integer, String> findStudentForMap(){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectStudentForMap();
+		}
 	}
 }
