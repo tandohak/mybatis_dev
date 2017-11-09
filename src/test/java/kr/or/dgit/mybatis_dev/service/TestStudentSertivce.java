@@ -1,11 +1,14 @@
 package kr.or.dgit.mybatis_dev.service;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.naming.spi.DirStateFactory.Result;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -100,6 +103,7 @@ public class TestStudentSertivce {
 		int res = studentService.updateStudent(student);
 		Assert.assertEquals(1, res);
 	}
+	
 	
 	@Test
 	public void testIupdateStudentWithAPI() {
@@ -228,12 +232,30 @@ public class TestStudentSertivce {
 		Assert.assertNotNull(student);
 	}
 	@Test
-	public void testFindStudentForMap() {
+	public void testXFindStudentForMap() {
 		Map<Integer,String> map = studentService.findStudentForMap();
 		Assert.assertNotNull(map);
 		
 		for(Entry<Integer,String> entry : map.entrySet()) {
 			System.out.printf("key(%s) = value(%s)%n", entry.getKey(), entry.getValue());
 		}
+	}
+	
+	@Test
+	public void testYupdateStudent() {
+		
+		Student student = new  Student();
+		student.setStudId(1);
+		student.setPhone(new PhoneNumber("987-654-3211"));
+		student.setDob(new Date());
+		
+		int res = studentService.updateSetStudent(student);
+		Assert.assertEquals(1, res);
+		
+		student.setPhone(new PhoneNumber("123-124-1231"));
+		student.setDob(new GregorianCalendar(1988, 04, 25).getTime());
+		
+		res = studentService.updateSetStudent(student);
+		Assert.assertEquals(1, res);
 	}
 }

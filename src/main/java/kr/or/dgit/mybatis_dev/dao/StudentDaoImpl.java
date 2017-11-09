@@ -72,6 +72,12 @@ public class StudentDaoImpl implements StudentDao{
 	}
 
 	@Override
+	public int updateSetStudent(Student student) {
+		log.debug("updateSetStudent()");
+		return sqlSession.update(namespace+"updateSetStudent", student);
+	}
+	
+	@Override
 	public int updateStudentWithAPI(Student student) {
 		log.debug("updateStudentWithAPI()");
 		return sqlSession.update(namespace+"updateStudentWithAPI", student);
